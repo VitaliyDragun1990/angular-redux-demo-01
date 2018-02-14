@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
 import { TodoDashboardComponent } from './todo-dashboard/todo-dashboard.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
-import { NgRedux, NgReduxModule } from '@angular-redux/store';
+import { NgRedux, NgReduxModule, DevToolsExtension } from '@angular-redux/store';
 import { IAppState, INITIAL_STATE, rootReducer } from './store';
 import { TodoActions } from './actions';
 
@@ -25,10 +25,15 @@ import { TodoActions } from './actions';
 })
 export class AppModule {
 
-  constructor(ngRedux: NgRedux<IAppState>) {
+  constructor(ngRedux: NgRedux<IAppState>,
+              devTools: DevToolsExtension) {
+    const enhancers = isDevMode() ? [devTools.enhancer()] : [];
+
     ngRedux.configureStore(
       rootReducer,
-      INITIAL_STATE
+      INITIAL_STATE,
+      [],
+      enhancers
     );
   }
 }
