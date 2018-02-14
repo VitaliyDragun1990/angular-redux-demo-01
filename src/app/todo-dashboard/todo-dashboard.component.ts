@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { TodoService } from '../todo.service';
+import { NgRedux, select } from '@angular-redux/store';
+import { IAppState } from '../store';
+import { Observable } from 'rxjs/Observable';
+import { TodoActions } from '../actions';
 
 @Component({
   selector: 'app-todo-dashboard',
@@ -7,34 +11,15 @@ import { TodoService } from '../todo.service';
   styleUrls: ['./todo-dashboard.component.css']
 })
 export class TodoDashboardComponent implements OnInit {
-  todos: number;
-  lastUpdate;
+  @select(['todos', 'length']) todos: Observable<number>;
+  @select('lastUpdate') lastUpdate: Observable<Date>;
 
-  constructor(private service: TodoService) {
-    this.todos = this.service.getTodos().length;
-
-    service.todoAdded.subscribe(() => {
-      this.todos++;
-      this.lastUpdate = new Date();
-    });
-
-    service.todoRemoved.subscribe(() => {
-      this.todos--;
-      this.lastUpdate = new Date();
-    });
-
-    service.todoToggled.subscribe(() => {
-      this.lastUpdate = new Date();
-    });
-
-    service.todosCleared.subscribe(() => {
-      this.todos = 0;
-      this.lastUpdate = new Date();
-    });
+  constructor(private ngRedux: NgRedux<IAppState>,
+              private actions: TodoActions) {
   }
 
   clearTodos() {
-    this.service.clearTodos();
+    this.ngRedux.dispatch(this.actions.clearTodos());
   }
 
   ngOnInit() {
