@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { TodoService } from '../todo.service';
 import { NgRedux, select } from '@angular-redux/store';
 import { IAppState } from '../store';
 import { Observable } from 'rxjs/Observable';

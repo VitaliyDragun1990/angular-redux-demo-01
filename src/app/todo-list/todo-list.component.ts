@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { TodoService } from '../todo.service';
 import { NgRedux } from '@angular-redux/store';
 import { TodoActions } from '../actions';
 import { IAppState } from '../store';

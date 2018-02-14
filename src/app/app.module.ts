@@ -5,7 +5,6 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { TodoDashboardComponent } from './todo-dashboard/todo-dashboard.component';
 import { TodoListComponent } from './todo-list/todo-list.component';
-import { TodoService } from './todo.service';
 import { NgRedux, NgReduxModule } from '@angular-redux/store';
 import { IAppState, INITIAL_STATE, rootReducer } from './store';
 import { TodoActions } from './actions';
@@ -21,7 +20,7 @@ import { TodoActions } from './actions';
     BrowserModule,
     NgReduxModule
   ],
-  providers: [TodoService, TodoActions],
+  providers: [TodoActions],
   bootstrap: [AppComponent]
 })
 export class AppModule {
